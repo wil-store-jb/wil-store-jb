@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAKET STARTER JB SULTAN - WIL DEV</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@400;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#fff;font-family:'Poppins',sans-serif;padding:15px}
+.container{max-width:500px;margin:0 auto}
+h1{font-family:'Orbitron';color:#ff6a00;text-align:center;font-size:24px;margin-bottom:5px}
+.subtitle{text-align:center;color:#999;font-size:12px;margin-bottom:20px}
+.tabs{display:flex;background:#1a1a1a;border-radius:10px;padding:5px;margin-bottom:15px}
+.tab{flex:1;padding:10px 5px;text-align:center;font-size:11px;font-weight:600;border-radius:7px;cursor:pointer}
+.tab.active{background:linear-gradient(45deg,#ff6a00,#ff9500);color:#000}
+.content{display:none}
+.content.active{display:block}
+input,textarea,select{width:100%;padding:12px;background:#1a1a1a;border:2px solid #333;border-radius:8px;color:#fff;font-size:14px;margin:8px 0;font-family:'Poppins'}
+input:focus,textarea:focus{border-color:#ff6a00;outline:none}
+label{font-size:12px;color:#ff9500;font-weight:600}
+button{width:100%;background:linear-gradient(45deg,#ff6a00,#ff9500);border:none;padding:15px;font-size:16px;font-weight:900;border-radius:8px;color:#000;margin-top:10px;cursor:pointer}
+canvas{width:100%;border:2px solid #ff6a00;border-radius:10px;margin-top:15px;background:#000}
+.result-box{background:#1a1a1a;border:2px solid #ff6a00;border-radius:10px;padding:15px;margin-top:15px;font-size:14px;white-space:pre-wrap}
+.footer{text-align:center;margin-top:20px;font-size:10px;color:#555}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>ðŸ”¥ PAKET STARTER JB ðŸ”¥</h1>
+    <p class="subtitle">5 TOOLS SULTAN - By WIL DEVELOPMENT</p>
+    
+    <div class="tabs">
+        <div class="tab active" onclick="openTab(0)">BANNER</div>
+        <div class="tab" onclick="openTab(1)">KARTU</div>
+        <div class="tab" onclick="openTab(2)">LOGO</div>
+        <div class="tab" onclick="openTab(3)">BIO</div>
+        <div class="tab" onclick="openTab(4)">QUOTES</div>
+    </div>
+
+    <!-- 1. BANNER GLOW -->
+    <div class="content active">
+        <label>Nama JB Lu:</label>
+        <input type="text" id="bannerNama" placeholder="Contoh: WIL DEV" maxlength="12">
+        <label>Pilih Style:</label>
+        <select id="bannerStyle">
+            <option value="api">Glow Api Oren</option>
+            <option value="es">Glow Es Biru</option>
+            <option value="ijo">Glow Toxic Ijo</option>
+        </select>
+        <button onclick="generateBanner()">GENERATE & DOWNLOAD BANNER</button>
+        <canvas id="bannerCanvas" width="1080" height="1080"></canvas>
+    </div>
+
+    <!-- 2. KARTU NAMA DIGITAL -->
+    <div class="content">
+        <label>Nama:</label>
+        <input type="text" id="kartuNama" placeholder="WIL DEV">
+        <label>Role JB:</label>
+        <input type="text" id="kartuRole" placeholder="MIDMAN | JPM | SELLER">
+        <label>Nomor WA:</label>
+        <input type="text" id="kartuWa" placeholder="0821-5690-5510">
+        <button onclick="generateKartu()">GENERATE & DOWNLOAD KARTU</button>
+        <canvas id="kartuCanvas" width="1080" height="1350"></canvas>
+    </div>
+
+    <!-- 3. LOGO WATERMARK -->
+    <div class="content">
+        <label>Teks Logo:</label>
+        <input type="text" id="logoText" placeholder="WIL DEV" maxlength="8">
+        <button onclick="generateLogo()">GENERATE & DOWNLOAD LOGO</button>
+        <canvas id="logoCanvas" width="500" height="500"></canvas>
+    </div>
+
+    <!-- 4. BIO IG AESTHETIC -->
+    <div class="content">
+        <label>Nama:</label>
+        <input type="text" id="bioNama" placeholder="WIL">
+        <label>Pilih Vibe:</label>
+        <select id="bioVibe">
+            <option value="sultan">Sultan JB</option>
+            <option value="misterius">Misterius</option>
+            <option value="amanah">Amanah</option>
+        </select>
+        <button onclick="generateBio()">GENERATE BIO</button>
+        <div id="bioResult" class="result-box">Hasil bio muncul disini. Tinggal copy.</div>
+    </div>
+
+    <!-- 5. QUOTES JB -->
+    <div class="content">
+        <label>Pilih Tema Quotes:</label>
+        <select id="quotesTema">
+            <option value="galau">Galau Kena HB</option>
+            <option value="sultan">Sultan JB</option>
+            <option value="sindiran">Sindiran Ripper</option>
+        </select>
+        <button onclick="generateQuotes()">GENERATE 3 QUOTES</button>
+        <div id="quotesResult" class="result-box">3 Quotes muncul disini. Tinggal copy buat SW.</div>
+    </div>
+
+    <p class="footer">Â© 2026 WIL DEVELOPMENT MAKASSAR - Tools ini 25K. Reseller 5K/biji cuan.</p>
+</div>
+
+<script>
+// TAB SYSTEM
+function openTab(index){
+    document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i==index));
+    document.querySelectorAll('.content').forEach((c,i)=>c.classList.toggle('active',i==index));
+}
+
+// 1. BANNER GENERATOR
+const bCanvas = document.getElementById('bannerCanvas'), bCtx = bCanvas.getContext('2d');
+function generateBanner(){
+    const nama = document.getElementById('bannerNama').value || 'NAMA LU';
+    const style = document.getElementById('bannerStyle').value;
+    let color1, color2;
+    if(style=='api'){color1='#ff6a00';color2='#ff9500'}
+    else if(style=='es'){color1='#00d4ff';color2='#0099ff'}
+    else{color1='#00ff88';color2='#00cc66'}
+    
+    bCtx.fillStyle = '#0a0a0a'; bCtx.fillRect(0,0,1080,1080);
+    bCtx.shadowColor = color1; bCtx.shadowBlur = 40;
+    bCtx.fillStyle = color2; bCtx.font = '900 110px Orbitron';
+    bCtx.textAlign = 'center'; bCtx.textBaseline = 'middle';
+    bCtx.fillText(nama.toUpperCase(), 540, 500);
+    bCtx.shadowBlur = 0; bCtx.fillStyle = '#fff';
+    bCtx.font = 'bold 40px Orbitron'; bCtx.fillText('JUAL BELI SULTAN', 540, 620);
+    bCtx.strokeStyle = color1; bCtx.lineWidth = 15; bCtx.strokeRect(30,30,1020,1020);
+    downloadCanvas(bCanvas, `Banner_${nama}`);
+}
+generateBanner();
+
+// 2. KARTU NAMA
+const kCanvas = document.getElementById('kartuCanvas'), kCtx = kCanvas.getContext('2d');
+function generateKartu(){
+    const nama = document.getElementById('kartuNama').value || 'NAMA LU';
+    const role = document.getElementById('kartuRole').value || 'JUAL BELI';
+    const wa = document.getElementById('kartuWa').value || '08xxxx';
+    
+    kCtx.fillStyle = '#0a0a0a'; kCtx.fillRect(0,0,1080,1350);
+    kCtx.strokeStyle = '#ff6a00'; kCtx.lineWidth = 10; kCtx.strokeRect(40,40,1000,1270);
+    kCtx.fillStyle = '#ff9500'; kCtx.font = '900 80px Orbitron'; kCtx.textAlign = 'center';
+    kCtx.fillText(nama.toUpperCase(), 540, 400);
+    kCtx.fillStyle = '#fff'; kCtx.font = '600 40px Poppins'; kCtx.fillText(role, 540, 500);
+    kCtx.font = '600 50px Poppins'; kCtx.fillText('ðŸ“± '+wa, 540, 650);
+    kCtx.fillStyle = '#ff6a00'; kCtx.font = '900 30px Orbitron'; kCtx.fillText('REAL | AMANAH | FAST RESPON', 540, 1200);
+    downloadCanvas(kCanvas, `Kartu_${nama}`);
+}
+
+// 3. LOGO WATERMARK
+const lCanvas = document.getElementById('logoCanvas'), lCtx = lCanvas.getContext('2d');
+function generateLogo(){
+    const text = document.getElementById('logoText').value || 'WD';
+    lCtx.clearRect(0,0,500,500);
+    lCtx.shadowColor = '#ff6a00'; lCtx.shadowBlur = 20;
+    lCtx.fillStyle = '#ff9500'; lCtx.font = '900 150px Orbitron'; lCtx.textAlign = 'center'; lCtx.textBaseline = 'middle';
+    lCtx.fillText(text.toUpperCase(), 250, 250);
+    lCtx.strokeStyle = '#ff6a00'; lCtx.lineWidth = 8; lCtx.beginPath(); lCtx.arc(250,250,220,0,Math.PI*2); lCtx.stroke();
+    downloadCanvas(lCanvas, `Logo_${text}`);
+}
+generateLogo();
+
+// 4. BIO GENERATOR
+function generateBio(){
+    const nama = document.getElementById('bioNama').value || 'NamaLu';
+    const vibe = document.getElementById('bioVibe').value;
+    let bio = '';
+    if(vibe=='sultan'){
+        bio = `ðŸ‘‘ ${nama} JB SULTAN ðŸ‘‘\nâš¡ Real Makassar | No HB Club\nðŸ’¸ Buy/Sell Acc | Fast Respon\nðŸ”¥ MC/JPM Terpercaya\nðŸ“± WA: 08xxx\n\n#AnakJBNaiKelas`;
+    } else if(vibe=='misterius'){
+        bio = `ã€Œ ${nama} ã€\nâ€” Diam bukan berarti kalah.\nâ€” HB? Skip. Gua main aman.\nâ€” Trust issue? Buktiin sendiri.\nâ€” DM for business only.\n\nðŸ—¡ï¸`;
+    } else {
+        bio = `Assalamualaikum ðŸ™\n${nama} | Real JB Makassar\nâœ… Amanah No.1 | Testi bejibun\nâœ… Bayar Setelah Jadi? Bisa.\nâœ… MC/JPM/Rekber Ready\nðŸ“² Chat WA aja ya`;
+    }
+    document.getElementById('bioResult').innerText = bio;
+}
+
+// 5. QUOTES GENERATOR
+function generateQuotes(){
+    const tema = document.getElementById('quotesTema').value;
+    let q = [];
+    if(tema=='galau'){
+        q = ['"Dulu HB, sekarang lebih hati-hati. Trauma itu guru paling kejam."','"Rugi 1jt gapapa, asal dapet pelajaran: jangan TF duluan."','"JB ngajarin gua 1 hal: Temen chat bisa jadi ripper."'];
+    } else if(tema=='sultan'){
+        q = ['"Main JB bukan soal akun sultan. Tapi soal otak bisnis."','"Beda kelas bro. Lu masih Lynk, gua udah custom web."','"Cuan dari JB? Bisa. Asal niat & ga nipu."'];
+    } else {
+        q = ['"Janji amanah? Tapi blokir abis TF. Lawak lu badut."','"Muka melas minta DP, pas dikirim ilang. Ripper moment."','"Ga semua yg bilang 'real' itu real. Tapi yg 'bayar setelah jadi' udah pasti real."'];
+    }
+    document.getElementById('quotesResult').innerText = q.join('\n\n');
+}
+
+// DOWNLOAD FUNCTION
+function downloadCanvas(canvas, name){
+    const link = document.createElement('a');
+    link.download = `${name}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+}
+</script>
+</body>
+</html>
