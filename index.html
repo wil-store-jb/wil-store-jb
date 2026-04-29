@@ -3,171 +3,252 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WIL DEV STORE - Jasa Website & Tools JB</title>
+<title>WIL JB STORE - Jasa Website, Tools, Akun JB</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Share+Tech+Mono&display=swap');
-* {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; cursor:none;}
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@400;700;900&display=swap');
+* {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
 body {background:#000; color:#fff; line-height:1.6; overflow-x:hidden;}
 
-/* CURSOR API + TARGET */
-.cursor {position:fixed; width:20px; height:20px; border-radius:50%; background:radial-gradient(circle,#FF4500,#FF0000); pointer-events:none; z-index:99999; box-shadow:0 0 20px #FF4500, 0 0 40px #FF0000; transition:transform 0.1s;}
-.cursor-trail {position:fixed; width:8px; height:8px; border-radius:50%; background:#FFA500; pointer-events:none; z-index:99998; opacity:0.7; animation:fadeOut 0.5s forwards;}
-.target-scope {position:fixed; width:40px; height:40px; border:2px solid #00FF00; border-radius:50%; pointer-events:none; z-index:99997; opacity:0.5; transform:translate(-50%,-50%);}
-.target-scope:before, .target-scope:after {content:""; position:absolute; background:#00FF00;}
-.target-scope:before {width:2px; height:100%; left:50%; top:0; transform:translateX(-50%);}
-.target-scope:after {width:100%; height:2px; top:50%; left:0; transform:translateY(-50%);}
-@keyframes fadeOut {to{opacity:0; transform:scale(0);}}
+/* MATRIX BG + PETIR */
+#matrix-bg {position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; opacity:0.1;}
+.lightning {position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:999999; opacity:0; pointer-events:none;}
+.lightning-flash {animation:lightningStrike 0.3s 2;}
+@keyframes lightningStrike {0%,100%{opacity:0;} 10%{opacity:0.7;} 20%{opacity:0;} 30%{opacity:1;} 40%{opacity:0;}}
 
-/* PARTIKEL BINTANG + FIREWORK */
-.star {position:fixed; width:4px; height:4px; background:#FFDC00; pointer-events:none; z-index:99996; border-radius:50%; box-shadow:0 0 6px #FFDC00; animation:starFall 1s forwards;}
-@keyframes starFall {to{opacity:0; transform:translateY(50px) scale(0);}}
-.firework {position:fixed; width:3px; height:3px; border-radius:50%; pointer-events:none; z-index:99995; animation:firework 1s forwards;}
-@keyframes firework {0%{opacity:1; transform:scale(1);} 100%{opacity:0; transform:scale(0) translate(var(--fx), var(--fy));}}
+.container {max-width:500px; margin:auto; padding:20px; position:relative; z-index:2;}
+.header {text-align:center; padding:25px 0; background:rgba(139,0,0,0.7); backdrop-filter:blur(10px); border-radius:0 0 25px 25px; box-shadow:0 5px 30px rgba(255,0,0,0.4); border:1px solid #FF0000; margin-bottom:20px;}
+.header h1 {font-size:28px; font-weight:900; letter-spacing:2px; text-shadow:0 0 15px #FF0000; font-family:'Share Tech Mono',monospace;}
+.header p {opacity:0.8; margin-top:5px; font-size:14px;}
+.badge {background:#FF0000; display:inline-block; padding:5px 15px; border-radius:20px; font-size:12px; margin-top:10px; animation:pulse 2s infinite;}
+@keyframes pulse {0%,100%{transform:scale(1);} 50%{transform:scale(1.05);}}
 
-/* SCANLINE TV RUSAK */
-.scanlines {position:fixed; top:0; left:0; width:100%; height:100%; background:repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px); pointer-events:none; z-index:99994; animation:scan 8s linear infinite;}
-@keyframes scan {0%{transform:translateY(0);} 100%{transform:translateY(100vh);}}
+.terminal {background:#000; border:1px solid #00FF00; padding:12px; border-radius:8px; font-family:'Share Tech Mono',monospace; color:#00FF00; font-size:13px; margin:15px 0;}
+.terminal:before {content:"> root@wiljb:~$ "; color:#FF0000;}
 
-/* LOADING SCREEN + SKULL */
-#loader {position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:999999; display:flex; align-items:center; justify-content:center; flex-direction:column;}
-#skull {font-size:80px; animation:skullBlink 0.5s 3;}
-@keyframes skullBlink {50%{opacity:0;}}
-#loader-text {font-family:'Share Tech Mono',monospace; color:#00FF00; font-size:14px; text-align:left; width:320px; margin-top:20px;}
-#progress-bar {width:320px; height:20px; border:2px solid #00FF00; margin-top:20px; position:relative;}
-#progress {height:100%; width:0%; background:#00FF00; box-shadow:0 0 10px #00FF00; transition:0.1s;}
-#percent {position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#000; font-weight:900; font-family:'Share Tech Mono',monospace; font-size:12px;}
+.info-bar {display:flex; justify-content:space-around; text-align:center; font-size:12px; margin:15px 0; background:rgba(17,24,39,0.8); padding:10px; border-radius:12px; border:1px solid #00FF00;}
+.info-item b {display:block; color:#00FF00; font-size:14px; font-family:'Share Tech Mono',monospace;}
 
-/* PASSWORD GATE */
-#password-gate {position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:999998; display:flex; align-items:center; justify-content:center; flex-direction:column;}
-#password-input {background:#111; border:2px solid #00FF00; color:#00FF00; padding:10px; font-family:'Share Tech Mono',monospace; font-size:16px; text-align:center; width:200px; outline:none;}
-#password-btn {background:#00FF00; color:#000; border:none; padding:10px 20px; margin-top:10px; font-weight:900; cursor:pointer;}
+.tab-btn {background:#1F2937; border:1px solid #FF0000; color:#fff; padding:10px; border-radius:8px; cursor:pointer; flex:1; margin:0 5px; font-weight:700; font-size:12px;}
+.tab-btn.active {background:#FF0000; box-shadow:0 0 15px #FF0000;}
+.tab-content {display:none;}
+.tab-content.active {display:block;}
 
-/* EFEK SHAKE MELEDAK */
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
-.shake-active {animation:shake 0.5s;}
+.card {background:rgba(17,24,39,0.85); backdrop-filter:blur(8px); border:1px solid #1F2937; border-radius:16px; padding:18px; margin:18px 0; box-shadow:0 4px 20px rgba(0,0,0,0.3); transition:0.3s;}
+.card:hover {transform:translateY(-3px); border-color:#FF0000; box-shadow:0 4px 30px rgba(255,0,0,0.3);}
+.card h2 {color:#FF0000; margin-bottom:12px; font-size:18px; border-left:4px solid #FF0000; padding-left:10px; font-family:'Share Tech Mono',monospace;}
+.card ul {list-style:none; font-size:14px;}
+.card li {padding:6px 0; border-bottom:1px dashed #1F2937;}
+.card li:last-child {border:none;}
+.card li:before {content:"[>]"; margin-right:8px; color:#00FF00; font-family:'Share Tech Mono',monospace;}
 
-/* GLITCH SCREEN MERAH */
-.glitch-screen {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,0,0,0.3); z-index:999997; display:none; mix-blend-mode:screen;}
-.glitch-screen:before {
-  content:"ACCESS GRANTED - REDIRECTING TO WA";
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  font-size:30px; font-family:'Share Tech Mono',monospace; color:#00FF00;
-  text-shadow:0 0 20px #00FF00; animation:glitch 0.3s infinite; text-align:center;
-}
+.price {font-size:24px; font-weight:900; color:#2ECC40; margin:12px 0; text-shadow:0 0 10px #2ECC40;}
+.price s {font-size:14px; color:#FF4136; margin-left:8px; opacity:0.7;}
+.stok {background:#FF0000; padding:3px 8px; border-radius:10px; font-size:11px; margin-left:5px; animation:blink 1.5s infinite;}
+@keyframes blink {50%{opacity:0.5;}}
 
-/* ALERT KEDIP MERAH */
-.alert-flash {position:fixed; top:0; left:0; width:100%; padding:10px; background:#FF0000; color:#fff; text-align:center; font-weight:900; z-index:999; display:none; animation:alertBlink 0.5s infinite;}
-@keyframes alertBlink {50%{opacity:0.5;}}
+.btn {display:block; width:100%; padding:14px; background:linear-gradient(135deg,#FF0000,#8B0000); color:#fff; text-align:center; border-radius:12px; text-decoration:none; font-weight:700; font-size:15px; margin-top:12px; box-shadow:0 4px 15px rgba(255,0,0,0.4); transition:0.2s; border:1px solid #FF0000; cursor:pointer;}
+.btn:hover {transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,255,0,0.6); background:linear-gradient(135deg,#8B0000,#FF0000);}
+.btn-wa {background:linear-gradient(135deg,#25D366,#128C7E); border:1px solid #25D366;}
+.btn-qris {background:linear-gradient(135deg,#4A00E0,#8E2DE2); border:1px solid #8E2DE2;}
+
+.grid {display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px;}
+.tag {background:rgba(31,41,55,0.8); padding:8px; border-radius:8px; font-size:11px; text-align:center; border:1px solid #1F2937;}
+
+.footer {text-align:center; opacity:0.5; font-size:11px; margin-top:30px; padding:15px 0;}
+.notif {position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#25D366; padding:12px 20px; border-radius:30px; font-size:13px; font-weight:700; box-shadow:0 5px 20px rgba(37,211,102,0.5); display:none; z-index:999; border:1px solid #fff;}
+
+/* QRIS MODAL */
+#qris-modal {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; display:none; align-items:center; justify-content:center; flex-direction:column; padding:20px;}
+.qris-box {background:#111; border:2px solid #8E2DE2; border-radius:16px; padding:20px; text-align:center; max-width:350px; width:100%;}
+.qris-box img {width:250px; height:250px; border:5px solid #fff; border-radius:12px; margin:15px 0;}
+.qris-box h3 {color:#8E2DE2; font-family:'Share Tech Mono',monospace; margin-bottom:10px;}
+.qris-box p {font-size:13px; opacity:0.8; margin:8px 0;}
+.qris-amount {background:#000; border:1px solid #00FF00; color:#00FF00; padding:10px; border-radius:8px; font-family:'Share Tech Mono',monospace; font-size:18px; margin:10px 0;}
+#close-qris {background:#FF0000; color:#fff; border:none; padding:10px 20px; margin-top:15px; border-radius:8px; font-weight:700; cursor:pointer;}
 
 /* SPIN WHEEL */
-#spin-modal {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:999996; display:none; align-items:center; justify-content:center; flex-direction:column;}
+#spin-modal {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9998; display:none; align-items:center; justify-content:center; flex-direction:column;}
 #wheel {width:250px; height:250px; border-radius:50%; border:10px solid #FFDC00; position:relative; overflow:hidden; transition:transform 4s cubic-bezier(0.17,0.67,0.12,0.99);}
 .wheel-section {position:absolute; width:50%; height:50%; transform-origin:100% 100%; display:flex; align-items:center; justify-content:center; font-weight:900; color:#000;}
 #spin-btn {background:#FFDC00; color:#000; border:none; padding:15px 30px; margin-top:20px; font-weight:900; font-size:18px; border-radius:10px; cursor:pointer;}
-
-/* CHAT LIVE PALSU */
-#live-chat {position:fixed; bottom:80px; right:20px; background:rgba(17,24,39,0.9); border:1px solid #00FF00; border-radius:12px; padding:10px; width:200px; z-index:999; font-size:12px; display:none;}
-#live-chat-header {color:#00FF00; font-weight:700; margin-bottom:5px;}
-.typing-dots span {animation:typingDot 1.4s infinite; animation-fill-mode:both;}
-.typing-dots span:nth-child(2) {animation-delay:0.2s;}
-.typing-dots span:nth-child(3) {animation-delay:0.4s;}
-@keyframes typingDot {0%{opacity:0.2;} 20%{opacity:1;} 100%{opacity:0.2;}}
-
-/* MUSIK BUTTON */
-#music-btn {position:fixed; top:20px; right:20px; background:rgba(17,24,39,0.8); border:1px solid #00FF00; color:#00FF00; width:40px; height:40px; border-radius:50%; z-index:999; cursor:pointer; display:flex; align-items:center; justify-content:center;}
-
-/* VISITOR MAP */
-#visitor-map {width:100%; height:150px; background:#000; border:1px solid #00FF00; margin:15px 0; position:relative; overflow:hidden;}
-.map-dot {position:absolute; width:6px; height:6px; background:#FF0000; border-radius:50%; box-shadow:0 0 10px #FF0000; animation:ping 1s infinite;}
-@keyframes ping {75%,100%{transform:scale(2); opacity:0;}}
-
-/* COUNTDOWN FLASH SALE */
-#countdown {background:#FF0000; padding:10px; text-align:center; font-weight:900; font-size:18px; margin:15px 0; border-radius:8px; animation:pulse 1s infinite;}
-#countdown span {font-family:'Share Tech Mono',monospace;}
-
-/* BACKGROUND EFEK */
-#matrix-bg {position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; opacity:0.15;}
-.error-overlay {position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1;
-background:url('https://i.ibb.co/7QpKsCX/blue-screen.png') center/cover no-repeat;
-opacity:0.08; mix-blend-mode:screen;}
-
-.container {max-width:600px; margin:auto; padding:20px; position:relative; z-index:2; display:none;}
-.header {text-align:center; padding:30px 0; background:rgba(0,31,63,0.7); backdrop-filter:blur(10px); border-radius:0 0 30px 30px; box-shadow:0 5px 30px rgba(0,116,217,0.4); border:1px solid #00A3FF; position:relative; overflow:hidden;}
-.header:before {content:""; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:linear-gradient(45deg,transparent,#00A3FF,transparent); animation:shine 3s infinite linear;}
-@keyframes shine {0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);}}
-.header h1 {font-size:32px; font-weight:900; letter-spacing:1px; text-shadow:0 0 15px #00A3FF; position:relative; font-family:'Share Tech Mono',monospace;}
-.header p {opacity:0.8; margin-top:5px; position:relative;}
-.typing {border-right:3px solid #00FF00; animation:blink 0.8s infinite;}
-@keyframes blink {50%{border-color:transparent;}}
-.glitch {animation:glitch 1s linear infinite;}
-@keyframes glitch{2%,64%{transform:translate(2px,0) skew(0deg);}4%,60%{transform:translate(-2px,0) skew(0deg);}62%{transform:translate(0,0) skew(5deg);}}
-.badge {background:#FF4136; display:inline-block; padding:5px 15px; border-radius:20px; font-size:12px; margin-top:10px; animation:pulse 2s infinite; position:relative;}
-@keyframes pulse {0%,100%{transform:scale(1);} 50%{transform:scale(1.05);}}
-.card {background:rgba(17,24,39,0.85); backdrop-filter:blur(8px); border:1px solid #1F2937; border-radius:16px; padding:20px; margin:20px 0; box-shadow:0 4px 20px rgba(0,0,0,0.3); transition:0.3s;}
-.card:hover {transform:translateY(-5px) scale(1.02); border-color:#00FF00; box-shadow:0 4px 30px rgba(0,255,0,0.3);}
-.card h2 {color:#00FF00; margin-bottom:15px; font-size:20px; border-left:4px solid #00FF00; padding-left:10px; font-family:'Share Tech Mono',monospace;}
-.card ul {list-style:none;}
-.card li {padding:8px 0; border-bottom:1px dashed #1F2937;}
-.card li:last-child {border:none;}
-.card li:before {content:"[>]"; margin-right:10px; color:#00FF00; font-family:'Share Tech Mono',monospace;}
-.price {font-size:28px; font-weight:900; color:#2ECC40; margin:15px 0; text-shadow:0 0 10px #2ECC40;}
-.price s {font-size:16px; color:#FF4136; margin-left:10px; opacity:0.7;}
-.btn {display:block; width:100%; padding:15px; background:linear-gradient(135deg,#0074D9,#00A3FF); color:#fff; text-align:center; border-radius:12px; text-decoration:none; font-weight:700; font-size:16px; margin-top:15px; box-shadow:0 4px 15px rgba(0,163,255,0.4); transition:0.2s; border:1px solid #00A3FF; cursor:pointer; position:relative; overflow:hidden;}
-.btn:before {content:""; position:absolute; top:50%; left:50%; width:0; height:0; border-radius:50%; background:rgba(255,255,255,0.3); transform:translate(-50%,-50%); transition:width 0.6s, height 0.6s;}
-.btn:hover:before {width:300px; height:300px;}
-.btn:hover {transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,255,0,0.6); background:linear-gradient(135deg,#00A3FF,#00FF00);}
-.btn-wa {background:linear-gradient(135deg,#25D366,#128C7E); border:1px solid #25D366;}
-.bundle {border:2px solid #FFDC00; background:rgba(17,24,39,0.9); animation:glow 2s infinite alternate;}
-@keyframes glow {from{box-shadow:0 0 10px #FFDC00;} to{box-shadow:0 0 25px #FFDC00;}}
-.bundle h2 {color:#FFDC00; border-left:4px solid #FFDC00;}
-.footer {text-align:center; opacity:0.5; font-size:12px; margin-top:40px; padding:20px 0;}
-.grid {display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px;}
-.tag {background:rgba(31,41,55,0.8); padding:8px; border-radius:8px; font-size:12px; text-align:center; border:1px solid #1F2937; transition:0.3s;}
-.tag:hover {border-color:#00FF00; transform:scale(1.05);}
-.info-bar {display:flex; justify-content:space-around; text-align:center; font-size:13px; margin:15px 0; background:rgba(17,24,39,0.8); padding:12px; border-radius:12px; border:1px solid #00FF00;}
-.info-item b {display:block; color:#00FF00; font-size:16px; font-family:'Share Tech Mono',monospace;}
-.stok {background:#FF4136; padding:3px 8px; border-radius:10px; font-size:11px; margin-left:5px; animation:blink 1.5s infinite;}
-.notif {position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#25D366; padding:12px 20px; border-radius:30px; font-size:14px; font-weight:700; box-shadow:0 5px 20px rgba(37,211,102,0.5); display:none; z-index:999; border:1px solid #fff;}
-.terminal {background:#000; border:1px solid #00FF00; padding:15px; border-radius:8px; font-family:'Share Tech Mono',monospace; color:#00FF00; font-size:13px; margin:15px 0;}
-.terminal:before {content:"> root@wildevstore:~$ "; color:#FFDC00;}
-.top-buyer {background:linear-gradient(135deg,#FFD700,#FFA500); color:#000; padding:10px; border-radius:8px; text-align:center; font-weight:900; margin:15px 0; animation:goldGlow 2s infinite;}
-@keyframes goldGlow {50%{box-shadow:0 0 20px #FFD700;}}
 </style>
 </head>
 <body>
 
-<!-- EFEK PETIR -->
 <div class="lightning" id="lightning"></div>
-<div class="lightning-bolt bolt1"></div>
-<div class="lightning-bolt bolt2"></div>
+<canvas id="matrix-bg"></canvas>
 
-<!-- CURSOR API -->
-<div class="cursor" id="cursor"></div>
-<div class="target-scope" id="target"></div>
+<div class="header">
+<h1>WIL JB STORE</h1>
+<p>[ Website + Tools + Akun + Rekber ]</p>
+<div class="badge">🔥 TRUSTED SEJAK 2024</div>
+</div>
 
-<!-- SCANLINE TV RUSAK -->
-<div class="scanlines"></div>
+<div class="container">
 
-<!-- ALERT MERAH KEDIP -->
-<div class="alert-flash" id="alertFlash">⚠️ WARNING: SLOT PROMO MAU HABIS ⚠️</div>
+<div class="terminal">System online... QRIS ready, scan langsung bayar</div>
 
-<!-- MUSIC BUTTON -->
-<button id="music-btn" onclick="toggleMusic()">🔊</button>
-<audio id="bg-music" loop>
-  <source src="https://files.catbox.moe/8s5g2k.mp3" type="audio/mpeg">
-</audio>
+<div class="info-bar">
+<div class="info-item">👁️ <b id="views">4,521</b> Views</div>
+<div class="info-item">📅 <b id="tanggal"></b></div>
+<div class="info-item">🕒 <b id="jam"></b> WIB</div>
+</div>
+
+<!-- TAB MENU -->
+<div style="display:flex; margin:15px 0;">
+  <button class="tab-btn active" onclick="openTab('web')">JASA WEB</button>
+  <button class="tab-btn" onclick="openTab('tools')">TOOLS JB</button>
+  <button class="tab-btn" onclick="openTab('akun')">AKUN</button>
+  <button class="tab-btn" onclick="openTab('rekber')">REKBER</button>
+</div>
+
+<!-- TAB 1: JASA WEBSITE -->
+<div id="web" class="tab-content active">
+  <div class="card">
+  <h2>[1] WEBSITE PAYMENT PRO <span class="stok">SISA 3</span></h2>
+  <ul>
+  <li>Desain premium + mobile friendly</li>
+  <li>View counter + jam real-time</li>
+  <li>Tombol WA & QRIS langsung aktif</li>
+  <li>Free domain.github.io + SSL</li>
+  <li>Bonus: Efek petir + hacker</li>
+  </ul>
+  <div class="price">Rp 50.000 <span id="disc1"></span></div>
+  <button class="btn btn-qris" onclick="openQris('Website Payment Pro','50000')">[ BAYAR QRIS ]</button>
+  <a href="https://wa.me/6282156905510?text=Bang+mau+order+Web+Payment" class="btn btn-wa">[ CHAT DULU ]</a>
+  </div>
+
+  <div class="card">
+  <h2>[2] WEB TOOLS JB PREMIUM</h2>
+  <ul>
+  <li>Dashboard modern + password gate</li>
+  <li>Support multi tools dalam 1 web</li>
+  <li>Free update selamanya + grup VIP</li>
+  <li>Bonus: Cursor api custom</li>
+  </ul>
+  <div class="price">Rp 75.000 <span id="disc2"></span></div>
+  <button class="btn btn-qris" onclick="openQris('Web Tools JB','75000')">[ BAYAR QRIS ]</button>
+  <a href="https://wa.me/6282156905510?text=Bang+mau+order+Web+Tools" class="btn btn-wa">[ CHAT DULU ]</a>
+  </div>
+</div>
+
+<!-- TAB 2: TOOLS JB -->
+<div id="tools" class="tab-content">
+  <div class="card">
+  <h2>[1] TOOLS AUTO POST JB</h2>
+  <ul>
+  <li>Post ke 100+ grup otomatis</li>
+  <li>Delay + spin text anti banned</li>
+  <li>Support gambar + video</li>
+  <li>Tutorial lengkap</li>
+  </ul>
+  <div class="price">Rp 75.000</div>
+  <button class="btn btn-qris" onclick="openQris('Tools Auto Post','75000')">[ BAYAR QRIS ]</button>
+  <a href="https://wa.me/6282156905510?text=Bang+mau+order+Tools+Auto+Post" class="btn btn-wa">[ CHAT DULU ]</a>
+  </div>
+
+  <div class="card">
+  <h2>[2] TOOLS SCRAPE MEMBER</h2>
+  <ul>
+  <li>Ambil data member grup WA</li>
+  <li>Export ke.txt/.csv</li>
+  <li>Bisa buat broadcast</li>
+  <li>1x bayar pake selamanya</li>
+  </ul>
+  <div class="price">Rp 50.000</div>
+  <button class="btn btn-qris" onclick="openQris('Tools Scrape','50000')">[ BAYAR QRIS ]</button>
+  <a href="https://wa.me/6282156905510?text=Bang+mau+order+Tools+Scrape" class="btn btn-wa">[ CHAT DULU ]</a>
+  </div>
+</div>
+
+<!-- TAB 3: AKUN -->
+<div id="akun" class="tab-content">
+  <div class="card">
+  <h2>[1] AKUN FF SULTAN <span class="stok">READY</span></h2>
+  <ul>
+  <li>Vault 300+ Skin SG2 OPM</li>
+  <li>Level 75, KD 4.8</li>
+  <li>Login Google, Data Aman</li>
+  <li>Free ganti email + pasword</li>
+  </ul>
+  <div class="price">Rp 250.000 <s>Rp 400.000</s></div>
+  <button class="btn btn-qris" onclick="openQris('Akun FF Sultan','250000')">[ BAYAR QRIS ]</button>
+  <a href="https://wa.me/6282156905510?text=Bang+mau+order+Akun+FF" class="btn btn-wa">[ CHAT DULU ]</a>
+  </div>
+
+  <div class="card">
+  <h2>[2] AKUN IG 10K FOLLOWERS</h2>
+  <ul>
+  <li>Followers real Indo aktif</li>
+  <li>Akun no minus, bisa CN</li>
+  <li>Cocok buat jualan/buzzer</li>
+  <li>Login langsung kasih</li>
+  </ul>
+  <div class="price">Rp 150.000</div>
+  <button class="btn btn-qris" onclick="openQris('Akun IG 10K','150000')">[ BAYAR QRIS ]</button>
+  <a href="https://wa.me/6282156905510?text=Bang+mau+order+Akun+IG" class="btn btn-wa">[ CHAT DULU ]</a>
+  </div>
+</div>
+
+<!-- TAB 4: REKBER -->
+<div id="rekber" class="tab-content">
+  <div class="card">
+  <h2>JASA REKBER <span class="stok">ADMIN ON</span></h2>
+  <ul>
+  <li>Fee 5rb untuk transaksi <500K</li>
+  <li>Fee 10rb untuk transaksi >500K</li>
+  <li>Aman 100% anti ripp</li>
+  <li>Proses cepat 5 menit cair</li>
+  <li>Terpercaya sejak 2024</li>
+  </ul>
+  <div class="price">Fee 5K - 10K</div>
+  <a href="https://wa.me/6282156905510?text=Bang+mau+pake+Rekber" class="btn btn-wa">[ CHAT ADMIN ]</a>
+  </div>
+</div>
+
+<div class="card">
+<h2>[🎁] SPIN DISKON HARI INI</h2>
+<p style="font-size:14px; margin-bottom:10px;">Putar wheel dapetin diskon 5% - 20% untuk semua produk!</p>
+<button class="btn" style="background:#FFDC00; color:#000;" onclick="openSpin()">[ PUTAR SEKARANG ]</button>
+</div>
+
+<div class="card">
+<h2>[?] CARA ORDER VIA QRIS</h2>
+1. Klik [BAYAR QRIS] di produk<br>
+2. Scan QRIS pake DANA/OVO/GOPAY<br>
+3. Screenshot bukti transfer<br>
+4. Klik [KONFIRMASI WA] kirim bukti<br>
+5. Barang langsung diproses<br><br>
+<a href="https://wa.me/6282156905510?text=Bang+mau+tanya+tanya" class="btn">[ CHAT ADMIN ]</a>
+</div>
+
+<div class="grid">
+<div class="tag">✅ 100% Amanah</div>
+<div class="tag">⚡ Proses Cepat</div>
+<div class="tag">🔄 Garansi 1x24J</div>
+<div class="tag">💬 Fast Respon</div>
+</div>
+
+<div class="terminal">Warning: Jangan TF ke selain QRIS di atas. Awas clone!</div>
+
+</div>
+
+<!-- QRIS MODAL -->
+<div id="qris-modal">
+  <div class="qris-box">
+    <h3>SCAN QRIS UNTUK BAYAR</h3>
+    <p id="qris-produk">Produk: -</p>
+    <div class="qris-amount" id="qris-amount">Rp 0</div>
+    <!-- GANTI LINK GAMBAR QRIS LU DISINI -->
+    <img src="https://i.ibb.co/6RJ5h8B/qris-example.png" alt="QRIS WIL JB STORE">
+    <p>1. Scan pake DANA/OVO/GOPAY/M-Banking</p>
+    <p>2. Masukin nominal sesuai di atas</p>
+    <p>3. Bayar & screenshot bukti</p>
+    <p>4. Klik tombol di bawah kirim bukti</p>
+    <a href="#" id="qris-wa-btn" class="btn btn-wa" style="margin-top:15px;">[ KONFIRMASI WA ]</a>
+    <button id="close-qris" onclick="closeQris()">TUTUP</button>
+  </div>
+</div>
 
 <!-- SPIN WHEEL MODAL -->
 <div id="spin-modal">
@@ -184,327 +265,63 @@ opacity:0.08; mix-blend-mode:screen;}
   <p id="spin-result" style="margin-top:20px; color:#00FF00; font-weight:900;"></p>
 </div>
 
-<!-- PASSWORD GATE -->
-<div id="password-gate">
-  <div style="text-align:center;">
-    <div style="font-size:60px;">🔐</div>
-    <h2 style="color:#00FF00; font-family:'Share Tech Mono',monospace; margin:20px 0;">ENTER ACCESS CODE</h2>
-    <input type="password" id="password-input" placeholder="CODE">
-    <br>
-    <button id="password-btn" onclick="checkPassword()">UNLOCK</button>
-    <p style="margin-top:15px; font-size:12px; opacity:0.7;">Hint: WILDEV</p>
-  </div>
-</div>
-
-<!-- LOADING SCREEN HACKER -->
-<div id="loader">
-<div id="skull">💀</div>
-<div id="loader-text"></div>
-<div id="progress-bar"><div id="progress"></div><div id="percent">0%</div></div>
-</div>
-
-<!-- EFEK GLITCH MERAH -->
-<div class="glitch-screen" id="glitch-screen"></div>
-
-<!-- CHAT LIVE PALSU -->
-<div id="live-chat">
-  <div id="live-chat-header">Live Chat (3)</div>
-  <div id="live-chat-body">
-    <div>Rizky: masih ada slot? <span class="typing-dots"><span>.</span><span>.</span></span></div>
-  </div>
-</div>
-
-<!-- BACKGROUND EFEK -->
-<canvas id="matrix-bg"></canvas>
-<div class="error-overlay"></div>
-
-<div class="header">
-<h1 class="typing glitch" id="judul">WIL DEV STORE</h1>
-<p>[ Jasa Website & Tools JB #1 ]</p>
-<div class="badge">🔥 TRUSTED SEJAK 2024</div>
-</div>
-
-<div class="container" id="main-content">
-
-<div class="terminal">System online... RAGUMU RUGIMU, YAKINMU CUANMU</div>
-
-<!-- COUNTDOWN FLASH SALE -->
-<div id="countdown">⚡ FLASH SALE BERAKHIR: <span id="cd-hours">23</span>:<span id="cd-mins">59</span>:<span id="cd-secs">59</span></div>
-
-<!-- TOP BUYER -->
-<div class="top-buyer">👑 TOP BUYER BULAN INI: <span id="top-buyer-name">Andi_Surabaya</span></div>
-
-<div class="info-bar">
-<div class="info-item">👁️ <b id="views">1,247</b> Views</div>
-<div class="info-item">📅 <b id="tanggal"></b></div>
-<div class="info-item">🕒 <b id="jam"></b> WIB</div>
-<div class="info-item">🌐 <b id="online">12</b> Online</div>
-</div>
-
-<!-- VISITOR MAP -->
-<div id="visitor-map">
-  <div style="text-align:center; padding-top:65px; color:#00FF00; font-size:12px;">LIVE VISITOR MAP</div>
-</div>
-
-<div class="card">
-<h2>[1] WEBSITE PAYMENT PRO <span class="stok">SISA 3 SLOT</span></h2>
-<ul>
-<li>Desain premium + mobile friendly</li>
-<li>Jam real-time + view counter + lokasi auto</li>
-<li>Tombol WA & QRIS langsung aktif</li>
-<li>Free domain.github.io + SSL</li>
-<li>Bonus: Efek hacker V8 + Petir</li>
-</ul>
-<div class="price">Rp 50.000 <span id="disc1"></span></div>
-<a href="https://wa.me/6282156905510?text=Bang+mau+order+Web+Payment+50K" class="btn btn-wa" onclick="beep()">[ EXECUTE ORDER ]</a>
-</div>
-
-<div class="card">
-<h2>[2] WEB TOOLS JB PREMIUM</h2>
-<ul>
-<li>Dashboard modern + password gate</li>
-<li>Tampilan web pro biar buyer percaya</li>
-<li>Support multi tools dalam 1 web</li>
-<li>Free update selamanya + grup VIP</li>
-<li>Bonus: Cursor api + petir custom</li>
-</ul>
-<div class="price">Rp 75.000 <span id="disc2"></span></div>
-<a href="https://wa.me/6282156905510?text=Bang+mau+order+Web+Tools+75K" class="btn btn-wa" onclick="beep()">[ EXECUTE ORDER ]</a>
-</div>
-
-<div class="card">
-<h2>[3] WEB ZOOM / BIO LINK</h2>
-<ul>
-<li>1 link untuk semua sosmed + musik</li>
-<li>Custom nama, foto, animasi, efek</li>
-<li>Efek salju / hujan / matrix request</li>
-<li>View counter + total klik link</li>
-<li>Bonus: Spin wheel diskon</li>
-</ul>
-<div class="price">Rp 35.000 <span id="disc3"></span></div>
-<a href="https://wa.me/6282156905510?text=Bang+mau+order+Web+Zoom+35K" class="btn btn-wa" onclick="beep()">[ EXECUTE ORDER ]</a>
-</div>
-
-<div class="card">
-<h2>[4] RESELLER PROGRAM <span class="stok">HOT</span></h2>
-<ul>
-<li>Harga reseller 15K / lisensi</li>
-<li>Jual lagi 25K-50K = untung 100%+</li>
-<li>Kasih web katalog khusus reseller</li>
-<li>Bimbingan closing sampai cuan</li>
-<li>Bonus: Visitor map real-time</li>
-</ul>
-<div class="price">Rp 15.000 <s>Rp 25.000</s> <span id="disc4"></span></div>
-<a href="https://wa.me/6282156905510?text=Bang+mau+daftar+Reseller+15K" class="btn btn-wa" onclick="beep()">[ JOIN RESELLER ]</a>
-</div>
-
-<div class="card bundle">
-<h2>[💎] PAKET BUNDLE HEMAT</h2>
-<ul>
-<li>Web Payment Pro + Web Tools JB</li>
-<li>Akses Reseller + GRATIS Web Zoom</li>
-<li>Bonus: Banner + caption promosi</li>
-<li>Priority support 24 jam no antri</li>
-<li>Super Bonus: Semua efek V8 + Petir</li>
-</ul>
-<div class="price">Rp 120.000 <s>Rp 175.000</s> <span id="disc5"></span></div>
-<a href="https://wa.me/6282156905510?text=Bang+mau+ambil+BUNDLE+120K" class="btn" onclick="explodeBundle(event)">[ 🔥 AMBIL BUNDLE ]</a>
-<button class="btn" style="background:#FFDC00; color:#000; margin-top:10px;" onclick="openSpin()">[ 🎁 SPIN DISKON DULU ]</button>
-</div>
-
-<div class="card">
-<h2>[?] CARA ORDER</h2>
-1. Klik tombol [EXECUTE ORDER] di produk<br>
-2. Transfer via QRIS / DANA / GOPAY<br>
-3. Kirim bukti → Proses 10 menit online<br><br>
-<a href="https://wil-store-jb.github.io/wil-store-jb/payment.html" class="btn" onclick="beep()">[ LIHAT PAYMENT GATEWAY ]</a>
-</div>
-
-<div class="grid">
-<div class="tag">✅ 100% Amanah</div>
-<div class="tag">⚡ Proses 10 Menit</div>
-<div class="tag">🔄 Free Update</div>
-<div class="tag">💬 Support 24J</div>
-</div>
-
-<div class="terminal">Warning: Slot terbatas. Delay = denied. Gas sekarang.</div>
-
-</div>
-
 <div class="footer">
-© 2026 WIL DEV STORE | wa.me/6282156905510<br>
+© 2026 WIL JB STORE | wa.me/6282156905510<br>
 <span id="lokasi">📍 Mendeteksi lokasi...</span>
 </div>
 
-<div class="notif" id="notif">✅ Access Granted! Langsung chat admin</div>
+<div class="notif" id="notif">✅ Ada orderan masuk!</div>
 
 <script>
-// 0. EFEK PETIR PAS BUKA WEB
+// EFEK PETIR PAS BUKA
 function lightningStrike(){
   const lightning = document.getElementById('lightning');
   lightning.classList.add('lightning-flash');
-  thunderSound();
-  setTimeout(()=>{lightning.classList.remove('lightning-flash');}, 1000);
+  setTimeout(()=>{lightning.classList.remove('lightning-flash');}, 600);
 }
+lightningStrike();
 
-// 1. PASSWORD GATE
-function checkPassword(){
-  if(document.getElementById('password-input').value.toUpperCase() === 'WILDEV'){
-    document.getElementById('password-gate').style.display = 'none';
-    beep(); beep();
-    lightningStrike(); // PETIR PAS MASUK
-  } else {
-    beep(); alert('ACCESS DENIED');
+// TAB SYSTEM
+function openTab(tabName) {
+  var i, tabcontent, tabbtn;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].classList.remove("active");
   }
-}
-
-// 2. CURSOR API + TARGET + JEJAK BINTANG
-const cursor = document.getElementById('cursor');
-const target = document.getElementById('target');
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-  target.style.left = e.clientX + 'px';
-  target.style.top = e.clientY + 'px';
-
-  const trail = document.createElement('div');
-  trail.className = 'cursor-trail';
-  trail.style.left = e.clientX + 'px';
-  trail.style.top = e.clientY + 'px';
-  document.body.appendChild(trail);
-  setTimeout(() => trail.remove(), 500);
-
-  if(Math.random() > 0.85){
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = e.clientX + 'px';
-    star.style.top = e.clientY + 'px';
-    document.body.appendChild(star);
-    setTimeout(() => star.remove(), 1000);
+  tabbtn = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tabbtn.length; i++) {
+    tabbtn[i].classList.remove("active");
   }
-
-  // Percikan petir kecil random
-  if(Math.random() > 0.98){
-    const spark = document.createElement('div');
-    spark.className = 'spark';
-    spark.style.left = e.clientX + 'px';
-    spark.style.top = e.clientY + 'px';
-    document.body.appendChild(spark);
-    setTimeout(() => spark.remove(), 500);
-  }
-});
-
-// 3. MUSIK BACKGROUND
-let musicPlaying = false;
-function toggleMusic(){
-  const music = document.getElementById('bg-music');
-  if(musicPlaying){
-    music.pause();
-    document.getElementById('music-btn').textContent = '🔇';
-  } else {
-    music.play();
-    document.getElementById('music-btn').textContent = '🔊';
-  }
-  musicPlaying =!musicPlaying;
-  beep();
+  document.getElementById(tabName).classList.add("active");
+  event.currentTarget.classList.add("active");
 }
 
-// 4. SUARA BEEP + EXPLOSION + NOTIF + PETIR
-function beep(){
-const ctx = new (window.AudioContext || window.webkitAudioContext)();
-const osc = ctx.createOscillator();
-const gain = ctx.createGain();
-osc.connect(gain); gain.connect(ctx.destination);
-osc.frequency.value = 800; osc.type = 'square';
-gain.gain.setValueAtTime(0.1, ctx.currentTime);
-osc.start(); osc.stop(ctx.currentTime + 0.1);
+// QRIS SYSTEM
+function openQris(produk, harga) {
+  document.getElementById('qris-produk').textContent = `Produk: ${produk}`;
+  document.getElementById('qris-amount').textContent = `Rp ${parseInt(harga).toLocaleString('id-ID')}`;
+  document.getElementById('qris-wa-btn').href = `https://wa.me/6282156905510?text=Bang+udah+TF+QRIS+${harga}+buat+${produk}+minta+konfirmasi`;
+  document.getElementById('qris-modal').style.display = 'flex';
+}
+function closeQris() {
+  document.getElementById('qris-modal').style.display = 'none';
 }
 
-function explosionSound(){
-const ctx = new (window.AudioContext || window.webkitAudioContext)();
-const osc = ctx.createOscillator();
-const gain = ctx.createGain();
-osc.connect(gain); gain.connect(ctx.destination);
-osc.frequency.setValueAtTime(100, ctx.currentTime);
-osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.3);
-osc.type = 'sawtooth';
-gain.gain.setValueAtTime(0.3, ctx.currentTime);
-gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-osc.start(); osc.stop(ctx.currentTime + 0.3);
-}
-
-function notifSound(){
-const ctx = new (window.AudioContext || window.webkitAudioContext)();
-const osc = ctx.createOscillator();
-const gain = ctx.createGain();
-osc.connect(gain); gain.connect(ctx.destination);
-osc.frequency.value = 1000; osc.type = 'sine';
-gain.gain.setValueAtTime(0.2, ctx.currentTime);
-osc.start(); osc.stop(ctx.currentTime + 0.15);
-}
-
-function thunderSound(){
-const ctx = new (window.AudioContext || window.webkitAudioContext)();
-const osc = ctx.createOscillator();
-const gain = ctx.createGain();
-const filter = ctx.createBiquadFilter();
-osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
-osc.type = 'sawtooth';
-osc.frequency.setValueAtTime(50, ctx.currentTime);
-osc.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.5);
-filter.type = 'lowpass';
-filter.frequency.value = 100;
-gain.gain.setValueAtTime(0.5, ctx.currentTime);
-gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
-osc.start(); osc.stop(ctx.currentTime + 0.5);
-}
-
-// 5. FUNGSI EXPLODE BUNDLE + GETAR HP
-function explodeBundle(e){
-  beep();
-  explosionSound();
-  if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
-  document.body.classList.add('shake-active');
-  document.getElementById('glitch-screen').style.display = 'block';
-
-  for(let i=0; i<30; i++){
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.left = e.clientX + 'px';
-    particle.style.top = e.clientY + 'px';
-    particle.style.background = `hsl(${Math.random()*60}, 100%, 50%)`;
-    particle.style.setProperty('--x', (Math.random()-0.5)*200 + 'px');
-    particle.style.setProperty('--y', (Math.random()-0.5)*200 + 'px');
-    document.body.appendChild(particle);
-    setTimeout(() => particle.remove(), 600);
-  }
-
-  showNotif();
-  setTimeout(()=>{
-    document.body.classList.remove('shake-active');
-    document.getElementById('glitch-screen').style.display = 'none';
-  },500);
-}
-
-// 6. SPIN WHEEL DISKON
+// SPIN WHEEL
 let hasSpun = false;
 function openSpin(){
   if(!hasSpun){
     document.getElementById('spin-modal').style.display = 'flex';
-    beep();
   } else {
     alert('Cuma bisa spin 1x bro!');
   }
 }
-
 function spinWheel(){
   if(hasSpun) return;
   hasSpun = true;
-  beep();
   const wheel = document.getElementById('wheel');
   const degrees = 1800 + Math.floor(Math.random() * 360);
   wheel.style.transform = `rotate(${degrees}deg)`;
-
   setTimeout(()=>{
     const actualDeg = degrees % 360;
     let diskon = 5;
@@ -512,93 +329,19 @@ function spinWheel(){
     else if(actualDeg >= 120 && actualDeg < 180) diskon = 15;
     else if(actualDeg >= 180 && actualDeg < 240) diskon = 20;
     else if(actualDeg >= 300) diskon = 10;
-
     document.getElementById('spin-result').textContent = `SELAMAT! Dapet diskon ${diskon}%`;
-    explosionSound();
-
     document.getElementById('disc1').textContent = `(-${diskon}%)`;
     document.getElementById('disc2').textContent = `(-${diskon}%)`;
-    document.getElementById('disc3').textContent = `(-${diskon}%)`;
-    document.getElementById('disc4').textContent = `(-${diskon}%)`;
-    document.getElementById('disc5').textContent = `(-${diskon}%)`;
-
     setTimeout(()=>{document.getElementById('spin-modal').style.display = 'none';}, 2000);
   }, 4000);
 }
 
-// 7. LOADING SCAN 0-100% + SKULL
-const loader = document.getElementById('loader');
-const loaderText = document.getElementById('loader-text');
-const progress = document.getElementById('progress');
-const percent = document.getElementById('percent');
-const mainContent = document.getElementById('main-content');
-const bootLines = [
-  'WILDEVSTORE OS v8.0 Booting...',
-  'Loading GOD MODE + PETIR... OK',
-  'Initializing cursor api... OK',
-  'Checking system integrity... OK',
-  'Loading kernel modules... OK',
-  'Initializing network... CONNECTED',
-  'Bypassing firewall... SUCCESS',
-  'Decrypting catalog... 100%',
-  'Loading spin wheel... OK',
-  'Activating visitor map... OK',
-  'Charging lightning... READY',
-  'System Ready. Welcome, User.'
-];
-let lineIndex = 0;
-let charIndex = 0;
-let progressVal = 0;
-
-function typeBoot(){
-  if(lineIndex < bootLines.length){
-    if(charIndex < bootLines[lineIndex].length){
-      loaderText.innerHTML += bootLines[lineIndex].charAt(charIndex);
-      charIndex++;
-      beep();
-      setTimeout(typeBoot, 15);
-    } else {
-      loaderText.innerHTML += '<br>';
-      lineIndex++; charIndex = 0;
-      setTimeout(typeBoot, 150);
-    }
-  }
-}
-
-function updateProgress(){
-  if(progressVal < 100){
-    progressVal += Math.random() * 2.5;
-    if(progressVal > 100) progressVal = 100;
-    progress.style.width = progressVal + '%';
-    percent.textContent = Math.floor(progressVal) + '%';
-    if(progressVal % 15 < 2) beep();
-    setTimeout(updateProgress, 40);
-  } else {
-    setTimeout(()=>{
-      document.getElementById('skull').style.display = 'none';
-      setTimeout(()=>{
-        loader.style.display = 'none';
-        mainContent.style.display = 'block';
-        beep(); beep();
-        typeWriter();
-        showLiveChat();
-        startCountdown();
-        showAlertFlash();
-      }, 500);
-    }, 500);
-  }
-}
-
-setTimeout(()=>{document.getElementById('skull').style.display = 'none';}, 1500);
-typeBoot();
-updateProgress();
-
-// 8. EFEK MATRIX BACKGROUND
+// MATRIX BG
 const canvas = document.getElementById('matrix-bg');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-const chars = '01WILDEVSTORE<>/\\{}[]';
+const chars = '01WILJBSTORE<>/\\{}[]';
 const fontSize = 14;
 const columns = canvas.width/fontSize;
 const drops = [];
@@ -606,7 +349,7 @@ for(let x=0; x<columns; x++) drops[x]=1;
 function drawMatrix(){
   ctx.fillStyle='rgba(0,0,0,0.05)';
   ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle='#00FF00';
+  ctx.fillStyle='#FF0000';
   ctx.font=fontSize+'px Share Tech Mono';
   for(let i=0; i<drops.length; i++){
     const text=chars[Math.floor(Math.random()*chars.length)];
@@ -617,135 +360,36 @@ function drawMatrix(){
 }
 setInterval(drawMatrix,33);
 
-// 9. EFEK KETIK DI JUDUL
-const text = "WIL DEV STORE";
-let i = 0;
-function typeWriter(){
-  if(i < text.length){
-    document.getElementById("judul").innerHTML = text.substring(0, i+1);
-    i++;
-    setTimeout(typeWriter, 150);
-  }
-}
-
-// 10. JAM & TANGGAL REALTIME + ONLINE COUNTER
+// JAM & TANGGAL
 function updateWaktu(){
 const now = new Date();
 document.getElementById('jam').textContent = now.toLocaleTimeString('id-ID');
 document.getElementById('tanggal').textContent = now.toLocaleDateString('id-ID',{day:'numeric',month:'short'});
-document.getElementById('online').textContent = Math.floor(Math.random() * 8) + 8;
 }
 setInterval(updateWaktu,1000); updateWaktu();
 
-// 11. VIEW COUNTER
-let views = localStorage.getItem('wildev_views') || 1247;
+// VIEW COUNTER
+let views = localStorage.getItem('wiljb_views') || 4521;
 views = parseInt(views) + Math.floor(Math.random() * 3) + 1;
-localStorage.setItem('wildev_views', views);
+localStorage.setItem('wiljb_views', views);
 document.getElementById('views').textContent = views.toLocaleString('id-ID');
 
-// 12. DETEKSI LOKASI + VISITOR MAP
+// LOKASI
 fetch('https://ipapi.co/json/').then(res=>res.json()).then(data=>{
 document.getElementById('lokasi').textContent = `📍 Akses dari: ${data.city}, ${data.region}`;
-addMapDot();
-}).catch(()=>{document.getElementById('lokasi').textContent = '📍 Akses dari: Indonesia'; addMapDot();});
+}).catch(()=>{document.getElementById('lokasi').textContent = '📍 Akses dari: Indonesia';});
 
-function addMapDot(){
-  const map = document.getElementById('visitor-map');
-  const dot = document.createElement('div');
-  dot.className = 'map-dot';
-  dot.style.left = Math.random() * 90 + 5 + '%';
-  dot.style.top = Math.random() * 80 + 10 + '%';
-  map.appendChild(dot);
-}
-setInterval(addMapDot, 5000);
-
-// 13. COUNTDOWN FLASH SALE 24 JAM
-function startCountdown(){
-  let hours = 23, mins = 59, secs = 59;
-  setInterval(()=>{
-    secs--;
-    if(secs < 0){ secs = 59; mins--; }
-    if(mins < 0){ mins = 59; hours--; }
-    if(hours < 0){ hours = 23; }
-    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
-    document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
-    document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
-  }, 1000);
-}
-
-// 14. ALERT MERAH KEDIP
-function showAlertFlash(){
-  setInterval(()=>{
-    document.getElementById('alertFlash').style.display = 'block';
-    beep();
-    setTimeout(()=>{document.getElementById('alertFlash').style.display = 'none';}, 2000);
-  }, 15000);
-}
-
-// 15. CHAT LIVE PALSU
-function showLiveChat(){
-  document.getElementById('live-chat').style.display = 'block';
-  const chats = [
-    'Rizky: masih ada slot?',
-    'Andi: transfer kmn bang',
-    'Putra: testi dong',
-    'Dimas: gercep banget',
-    'Bayu: udah TF nih',
-    'Galih: webnya GG'
-  ];
-  let chatIndex = 0;
-  setInterval(()=>{
-    document.getElementById('live-chat-body').innerHTML = `<div>${chats[chatIndex]} <span class="typing-dots"><span>.</span><span>.</span><span>.</span></span></div>`;
-    chatIndex = (chatIndex + 1) % chats.length;
-  }, 4000);
-}
-
-// 16. FIREWORK PAS SCROLL
-let lastScroll = 0;
-window.addEventListener('scroll', ()=>{
-  const currentScroll = window.pageYOffset;
-  if(currentScroll > lastScroll && currentScroll % 200 < 10){
-    for(let i=0; i<10; i++){
-      const fw = document.createElement('div');
-      fw.className = 'firework';
-      fw.style.left = Math.random() * window.innerWidth + 'px';
-      fw.style.top = currentScroll + Math.random() * window.innerHeight + 'px';
-      fw.style.background = `hsl(${Math.random()*360}, 100%, 50%)`;
-      fw.style.setProperty('--fx', (Math.random()-0.5)*100 + 'px');
-      fw.style.setProperty('--fy', (Math.random()-0.5)*100 + 'px');
-      document.body.appendChild(fw);
-      setTimeout(()=>fw.remove(), 1000);
-    }
-  }
-  lastScroll = currentScroll;
-});
-
-// 17. TOP BUYER MUTER
-const topBuyers = ['Andi_Surabaya', 'Rizky_Jakarta', 'Putra_Bandung', 'Dimas_Medan', 'Bayu_Makassar'];
-let buyerIndex = 0;
-setInterval(()=>{
-  buyerIndex = (buyerIndex + 1) % topBuyers.length;
-  document.getElementById('top-buyer-name').textContent = topBuyers[buyerIndex];
-}, 5000);
-
-// 18. NOTIF POPUP
-function showNotif(){
-notifSound();
-document.getElementById('notif').style.display='block';
-setTimeout(()=>{document.getElementById('notif').style.display='none';},3000);
-}
-
-// 19. NOTIF FAKE ORDER BIAR FOMO
-const nama = ['Rizky','Andi','Putra','Dimas','Bayu','Galih','Reza','Xyz','Zyy','Fajar','Dev','Alok','Budi'];
+// NOTIF FAKE ORDER
+const nama = ['Rizky','Andi','Putra','Dimas','Bayu','Galih','Reza','Zyy','Fajar','Dev'];
+const produk = ['Web Payment','Tools JB','Akun FF','Rekber'];
 setInterval(()=>{
 const randomNama = nama[Math.floor(Math.random()*nama.length)];
-const randomProduk = ['Web Payment','Bundle Hemat','Reseller','Web Zoom'][Math.floor(Math.random()*4)];
+const randomProduk = produk[Math.floor(Math.random()*produk.length)];
 const notif = document.getElementById('notif');
-notif.textContent = `✅ ${randomNama} baru saja execute ${randomProduk}`;
+notif.textContent = `✅ ${randomNama} baru aja order ${randomProduk}`;
 notif.style.display='block';
-notifSound();
 setTimeout(()=>{notif.style.display='none';},4000);
-},16000);
+},18000);
 </script>
 
 </body>
