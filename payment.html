@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - WIL DEV STORE</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0f172a; color: #fff; text-align: center; padding: 20px; margin: 0; }
+    .welcome { background: linear-gradient(135deg, #1e40af, #0ea5e9); padding: 12px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; }
+    .stats { display: flex; justify-content: space-between; background: #0f172a; padding: 10px 15px; border-radius: 8px; margin-bottom: 15px; font-size: 12px; border: 1px solid #334155; }
+    .stat-item { color: #94a3b8; }
+    .stat-value { color: #4ade80; font-weight: bold; }
+    .card { background: #1e293b; max-width: 400px; margin: 0 auto; padding: 25px; border-radius: 15px; border: 2px solid #334155; }
+    h1 { color: #38bdf8; margin: 0 0 5px 0; }
+    .harga { font-size: 32px; color: #4ade80; font-weight: bold; margin: 15px 0; }
+    .qris-img { width: 100%; max-width: 300px; border-radius: 12px; margin: 15px 0; border: 3px solid #38bdf8; background: #fff; padding: 10px; }
+    .btn { display: block; background: #22c55e; color: #000; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 12px; }
+    .btn-dana { background: #108ee9; color: #fff; }
+    .btn-store { background: #a855f7; color: #fff; }
+    .note { font-size: 12px; color: #f87171; margin-top: 15px; line-height: 1.5; }
+    .bot-text { font-size: 13px; color: #94a3b8; margin-top: 20px; border-top: 1px solid #334155; padding-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="welcome">
+    🤖 <b>WilStore Bot:</b> Halo! Selamat datang di Payment WIL DEV STORE
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">👁️ <span class="stat-value" id="viewCount">20</span> Orang Lihat</div>
+    <div class="stat-item">🕒 <span class="stat-value" id="jamWIB">--:--:--</span> WIB</div>
+    <div class="stat-item">📍 <span class="stat-value" id="wilayah">Mendeteksi...</span></div>
+  </div>
+  
+  <div class="card">
+    <h1>🔥 WIL DEV STORE</h1>
+    <p>Pembayaran Tools 5in1 JB Premium</p>
+    <div class="harga">Rp 25.000</div>
+    <p style="color:#94a3b8;">SCAN QRIS DIBAWAH INI:</p>
+    <img src="WA_1777442308942.jpeg" alt="QRIS WIL DEV STORE" class="qris-img">
+    
+    <a href="https://wa.me/6282156905510?text=Bang+udah+TF+Tools+5in1+25K+kirim+passwordnya" class="btn">✅ KIRIM BUKTI TF KE WA</a>
+    
+    <a href="https://wa.me/6282156905510?text=Bang+mau+bayar+lewat+DANA+berapa+nomornya" class="btn btn-dana">💙 BAYAR VIA DANA</a>
+    
+    <a href="https://wa.me/c/6282156905510" class="btn btn-store">🛒 LIHAT KATALOG STORE</a>
+    
+    <p class="note">*QRIS a.n WIL DEV STORE<br>*Wajib kirim bukti SS. Password auto dikirim setelah bayar</p>
+    
+    <div class="bot-text">
+      💬 <b>Bot aktif 24 jam</b><br>
+      Butuh bantuan? Langsung chat admin
+    </div>
+  </div>
+
+<script>
+// 1. JAM WIB REALTIME
+function updateJam() {
+  const now = new Date();
+  const options = { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  document.getElementById('jamWIB').textContent = now.toLocaleTimeString('id-ID', options);
+}
+setInterval(updateJam, 1000);
+updateJam();
+
+// 2. DETEKSI WILAYAH PAKAI API GRATIS
+fetch('https://ipapi.co/json/')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('wilayah').textContent = data.city || 'Indonesia';
+  })
+  .catch(() => {
+    document.getElementById('wilayah').textContent = 'Indonesia';
+  });
+
+// 3. VIEW COUNTER FAKE +20 BIAR RAMAI
+let views = 20;
+const viewElement = document.getElementById('viewCount');
+// Nambah 1 setiap 15-45 detik biar keliatan real
+setInterval(() => {
+  views += 1;
+  viewElement.textContent = views;
+}, Math.random() * 30000 + 15000);
+</script>
+
+</body>
+</html>
